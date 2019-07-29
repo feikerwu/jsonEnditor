@@ -21,12 +21,12 @@ export default class JSONEditor {
     this.jsonData = setNestingObject(this.jsonData, key, value);
   }
 
-  get(key: string): any {
+  get(key?: string): any {
     return getNestingObject(this.jsonData, key);
   }
 
   save(): void {
-    fs.writeFileSync(this.jsonPath, this.jsonData);
+    fs.writeFileSync(this.jsonPath, JSON.stringify(this.jsonData));
   }
 }
 
@@ -34,14 +34,16 @@ function isJsonPath(filePath: string): boolean {
   return /\.json$/.test(filePath);
 }
 
-function getNestingObject(obj: object, keys: string): any {
-  return keys.split('.').reduce((acc, curKey) => {
-    if (!acc) {
-      return undefined;
-    }
+function getNestingObject(obj: object, keys: string | undefined): any {
+  return keys
+    ? keys.split('.').reduce((acc, curKey) => {
+        if (!acc) {
+          return undefined;
+        }
 
-    return acc[curKey];
-  });
+        return acc[curKey];
+      }, obj)
+    : obj;
 }
 
 function setNestingObject(obj: object, keys: string, value): object {
@@ -53,8 +55,9 @@ function setNestingObject(obj: object, keys: string, value): object {
 
   for (let i = 0; i < keyArr.length - 1; i++) {
     let curKey = keyArr[i];
-    curObj = changedObj[curKey];
+    curObj = curObj[curKey];
     if (curObj === null || typeof curObj !== 'object') {
+      console.log(curObj);
       isLegal = false;
       break;
     }
@@ -65,6 +68,6 @@ function setNestingObject(obj: object, keys: string, value): object {
     return obj;
   }
 
-  curObj[keyArr[-1]] = value;
+  curObj[keyArr[keyArr.length - 1]] = value;
   return changedObj;
 }
