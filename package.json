@@ -1,6 +1,6 @@
 {
-  "name": "jssdk",
-  "version": "0.0.1",
+  "name": "json-editor",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
