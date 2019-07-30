@@ -1,3 +1,9 @@
 /**/node_modules/*
 *.log
 test/**/*.json
+src/*
+example/*
+test/*
+jest.config.json
+tsconfig.json
+yarn.lock
