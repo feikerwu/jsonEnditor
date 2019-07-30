@@ -1,7 +1,10 @@
 {
+  "exclude": ["dist/*", "node_modules", "**/*.spec.ts", "**/*.test.ts"],
   "include": ["/src/**/*"],
+  "files": ["src/index.ts"],
   "compilerOptions": {
     "esModuleInterop": true,
+    "target": "es5",
     "module": "commonjs",
     "rootDir": "src",
     "outDir": "dist"
